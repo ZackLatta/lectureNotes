@@ -15,7 +15,10 @@ import org.sireum._
       Proof(
 
       //PROOF GOES HERE
-
+      //        * Top level operator
+      1 ( p ^ q ^ r) by Premise,
+      2 ( p ^ q ) by AndE1(1),
+      3 ( q ) by AndE2(2),
 
     )
     //@formatter:on

@@ -15,7 +15,10 @@ import org.sireum._
       Proof(
 
       //PROOF GOES HERE
-
+      1 ( p ^ q ) by Premise,
+      2 ( p ) by AndE1(1),
+      3 ( q ) by AndE2(1),
+      4 ( q ^ p ) by AndI(3,2)
 
     )
     //@formatter:on
