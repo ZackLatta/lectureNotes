@@ -2,6 +2,8 @@
 //@Logika: --manual --background type
 
 import org.sireum._
+import org.sireum.justification._
+import org.sireum.justification.natded.prop._
 
 //First part proof of distributive law:
 //p ∨ (q ∧ r)     is equivalent to
@@ -16,24 +18,7 @@ import org.sireum._
       Proof(
 
       //PROOF GOES HERE
-      1 ((p | q) & (p | r)) Premise,
-      2 ( p | q ) AndE1(1),
-      3 ( p | r) AndE2(2),
-      4 SubProof(
-        5 Assume(p),
-        6 ( p | (q & r)) by OrI1(5)
-      )
-      7 SubProof(
-        8 Assume(q),
-        9 SubProof(
-          10 Assume(p)
-          11( p | (q & r) ) by OrI1(10),
-        )
-        12 SubProof(
-          13 Assume(r),
-          14 ( q & r ) by AndI(8,13)
-        )
-      )
+      //We will do this proof on Tues Sep 10
 
     )
     //@formatter:on
