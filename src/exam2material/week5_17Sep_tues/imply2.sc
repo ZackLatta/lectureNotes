@@ -17,16 +17,23 @@ import org.sireum.justification.natded.prop._
         4 Assume(p | q),
         5 SubProof(
           6 Assume(p),
-          7 (r) by ImplyE(1, 6)
+          7 (r) by ImplyE(1, 6),
+
+          //goal: r
         ),
         8 SubProof(
-          9 Assume (q),
-          10 (r) by ImplyE(2,9),
+          9 Assume(q),
+          10 (r) by ImplyE(2, 9)
+          //goal: r
         ),
-        11 (r) by OrE(4, 5, 8),
+        11 (r) by OrE(4, 5, 8)
+        //subproof with q next
 
+        //goal: r
       ),
-      12 (p | q __>: r) by ImplyI(3),
+      12 (p | q __>: r) by ImplyI(3)
+
+      //goal: p | q __>: r
     )
     //@formatter:on
   )

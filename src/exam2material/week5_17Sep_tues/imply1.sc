@@ -18,10 +18,11 @@ import org.sireum.justification.natded.prop._
         5 (p) by AndE1(4),
         6 (q) by AndE2(4),
         7 (r) by ImplyE(1, 5)
+
+        //goal: r
       ),
       8 (p & q __>: r) by ImplyI(3)
-
-
+      //goal: p & q __>: r
     )
     //@formatter:on
   )
