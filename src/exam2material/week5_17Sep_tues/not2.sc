@@ -12,6 +12,9 @@ import org.sireum.justification.natded.prop._
     ( !p & !q ) |- ( !(p | q)  )
       Proof(
         1 (  !p & !q ) by Premise,
+        2 SubProof(
+          3 Assume(p | q)
+        )
 
     )
     //@formatter:on
