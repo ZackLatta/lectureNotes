@@ -1,0 +1,245 @@
+HW 11 due Tues Dec 3
+    (this is the last assignment)
+
+Final exam: Monday, December 9 2:00-3:50 pm
+
+Looking for at least one CIS 301 UTA for Spring 2025
+    email me before fall break if you are interested
+
+/////////////////////////////
+
+Today:
+- More with sequences
+- Global invariants
+
+/////////////////////////////
+
+Reminder: function contracts for sequences
+
+    What should we require?
+        think about what parameters could potentially cause
+            an out of bounds issue
+
+    When do we put "Modifies"? if I am changing a sequence
+        parameter in the function
+
+    What should we ensure?
+        is the function changing the sequence?
+            describe exactly how each element was changed
+            should be possible to know the value of each
+                position in the sequence
+        are we returning something?
+            describe what Res is in relation to the sequence
+
+
+////////////////////////////
+
+Reminder: loop invariants with sequences
+
+    "Modifies" includes...the sequence
+        (as well as loop counter, any other variable that changes)
+
+    What do we need as invariants?
+        about the loop counters?
+            bound them (provide upper and lower bounds)
+            should be clear that it's not possible to go past
+                bounds of sequence
+
+        about the progress with the sequence?
+            if we are changing it:
+                describe what section has changed, and how
+                often, need to describe what hasn't changed
+            if we are not, describe what part of the sequence
+                we've looked at
+
+////////////////////////////
+
+Example: plusOneSeq.sc
+
+--> why do we have to say which elements haven't changed?
+
+--> need to add that the size doesn't change in
+    our loop invariant
+
+////////////////////////////
+
+Example: seqMin.sc
+
+////////////////////////////
+
+Example: containsElem.sc
+
+////////////////////////////
+
+Global variables and global invariants.
+
+- Multiple functions might share the same global variables
+- (true for fields/properties when writing general classes)
+
+- Will add GLOBAL INVARIANTS specifying what must always be true
+    about global variables
+
+
+--> global invariants  must be true initially
+
+--> the global invariants become both a precondition and a postcondition
+    for all functions
+
+
+What does this mean?
+
+
+////////////////////////////////
+
+Idea: suppose you are representing a clock
+
+global variables for: seconds, minutes, hours
+
+--> what might the global invariants be?
+
+seconds >= 0
+seconds <= 59
+
+
+////////////////////////////////
+
+What needs to be true before we call a function?
+
+
+
+What can the function itself assume about the global invariants?
+
+
+
+What must the function do with the global invariants before returning?
+
+
+
+What can the calling code assume about the global invariants after
+    a function call?
+
+
+
+/////////////////////////////////////
+
+Function contracts when considering global variables/invariants:
+    - Requires: what kind of parameters should we not allow?
+
+    - Modifies: list any global variables that are changed
+
+    - Ensures: describe impact of function on global variables
+        Use In(globalVariable) to reference global variable
+        value at beginning of function
+
+
+
+/////////////////////////////////////
+
+Bank example (bank.sc)
+
+Global variables:
+    - account balance
+    - "elite" status (a boolean for whether the balance is >= 1 million)
+
+Global invariants:
+    - balance should be non-negative
+    - elite status should reflect balance
+
+
+
+////////////////////////////////////
+
+<-- stopped here, will finish on Tues Dec 3
+
+////////////////////////////////////
+
+Problem 3 on HW 11: reverse a sequence
+
+loops while i < seq.size/2
+    swaps elements at i, seq.size-i-1
+
+
+What does it mean to be reversed?
+
+
+After i iterations of the loop:
+    what has changed?
+    what is the same?
+
+///////////////////////////////////
+
+Problem 6 on HW 11: Fan specification
+
+Fan speeds: 0-5
+Fan can be on (speeds 1-5) or off (speed 0)
+Fan can optionally rotate (but ONLY at speeds 3-5)
+
+Think of it as having two controls:
+    1) speed knob (becomes on when 1-5, off when 0)
+        --> can only change one speed level at a time
+
+    2) rotation lever
+
+--> since rotation is a DIFFERENT control, changing
+    speed can't change rotation
+
+
+Initially:
+    fan off
+    speed 0
+    rotate off
+
+Global invariants:
+    curSpeed >= 0,
+    curSpeed <= 5,
+    fanOn == true -> curSpeed > 0,
+    fanOn == false -> curSpeed == 0,
+    rotateOn == true -> curSpeed >= 3
+
+
+Functions:
+    setSpeed(speed: Z)
+    turnOn()
+    makeRotate()
+    stopRotate()
+
+
+
+    Fan on, speed 3, rotate on. Can we call setSpeed(2)?
+        no - fan can't rotate at speeds below 3
+
+    Fan off, speed 0, rotate off. Can we call setSpeed(1)?
+        yes (and should also turn fan on)
+
+    Fan on, speed 2, rotate off. Can we call setSpeed(0)?
+        no - can't change speeds by more than 1
+
+    Fan on, speed 3, rotate on. Can we call setSpeed(4)?
+        yes (and rotate stays on)
+
+    Fan on, speed 3, rotate on. Can we call makeRotate()?
+        no - fan is already rotating
+
+    Fan on, speed 5, rotate off. Can we call setSpeed(5)?
+        no - already at that speed
+
+    Fan on, speed 5, rotate off. Can we call setSpeed(6)?
+        no - speed of 6 is not allowed
+
+    Fan on, speed 1, rotate off. Can we call setSpeed(0)?
+        yes (and also turns fan off)
+
+
+What considerations when setting the speed?
+    preconditions?
+
+
+////////////////////////////////////
+
+Next time:
+- look at program specification in Java
+- termination
+
+
+
+
