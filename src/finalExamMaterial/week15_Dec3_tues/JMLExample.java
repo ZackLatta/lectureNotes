@@ -2,56 +2,56 @@ package finalExamMaterial.week15_Dec3_tues;
 
 public class JMLExample {
     /*@
-        requires x >= 0;
-        ensures \result == x+1;
-        ensures \result >= 1;
+        requires y >= 0;
+        ensures \result == x*y;
     */
-    public static int plusOne(int x) {
+    public static int mult(int x, int y) {
         //what should we do here?
 
-        int ans = x + 1;
+        if (y < 0) {
+            throw new IllegalArgumentException("second parameter must be nonnegative");
+        }
+
+        int sum = 0;
+        int count = 0;
+
+        while (count < y) {
+            sum = sum + x;
+            count = count + 1;
+        }
 
         //what should we do here?
+        assert sum == x*y;
 
-        return ans;
+        return sum;
     }
 
     /*@
         requires nums != null;
-        ensures (\forall int k; 0 <= k && k < nums.length; nums[k] == \old(nums[k]) * 2);
+        requires nums.length >= 2;
+        ensures (nums[0] == \old(nums[nums.length-1]));
+        ensures (nums[nums.length-1] == \old(nums[0]));
+        ensures (\forall int k; 1 <= k && k < nums.length-1; nums[k] == \old(nums[k]));
     */
-    public static void doubleEach(int[] nums) {
+    public static void changeArray(int[] nums) {
         //what should we do here?
+
+        if (nums == null || nums.length < 2) {
+            throw new IllegalArgumentException("array must be non-null with size at least 2");
+        }
 
         int[] oldElem = new int[nums.length];
         System.arraycopy(nums, 0, oldElem, 0, nums.length);
 
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = nums[i] * 2;
-        }
+        int temp = nums[0];
+        nums[0] = nums[nums.length-1];
+        nums[nums.length-1] = temp;
 
         //what should we do here?
-    }
-
-    /*@
-        requires orig != null;
-        ensures orig.length == \result.length;
-        ensures ((\forall int k; k >= 0 && k < orig.length; \result[k] == orig[k].length()));
-     */
-    public static int[] getStringLengths(String[] orig) {
-        //what should we do here?
-
-        if (orig == null) {
-            throw new IllegalArgumentException("precondition violated: array shouldn't be null");
+        for (int i = 1; i < nums.length-1; i++) {
+            assert nums[i] == oldElem[i];
         }
-
-        int[] resultArray = new int[orig.length];
-        for (int i = 0; i < orig.length; i++) {
-            resultArray[i] = orig[i].length();
-        }
-
-        //what should we do here?
-
-        return resultArray;
+        assert nums[0] == oldElem[nums.length-1];
+        assert nums[nums.length-1] == oldElem[0];
     }
 }
